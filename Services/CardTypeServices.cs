@@ -18,27 +18,27 @@ namespace SberBanOnline.Services
             return (createResult);
         }
 
-        public Task<bool> DeleteCardTypeAsync(int id)
+        public async Task<bool> DeleteCardTypeAsync(int id)
         {
-            var Answer = _cardTypeRepo.DeleteCardTypeAsync(id);
+            var Answer = await _cardTypeRepo.DeleteCardTypeAsync(id);
             return (Answer);
         }
 
-        public Task<List<CardType>> GetAllAsync()
+        public async Task<List<CardType>> GetAllAsync()
         {
-            var listCardType = _cardTypeRepo.GetAllAsync();
+            var listCardType = await _cardTypeRepo.GetAllAsync();
             return (listCardType);
         }
 
-        public Task<CardType?> GetByIdAsync(int id)
+        public async Task<CardType?> GetByIdAsync(int id)
         {
-            var selectedCardType = _cardTypeRepo.GetByIdAsync(id);
+            var selectedCardType = await _cardTypeRepo.GetByIdAsync(id);
             return (selectedCardType);
         }
 
-        public Task<CardType?> UpdateCardTypeAsync(int id, CardType cardType)
+        public async Task<CardType?> UpdateCardTypeAsync(int id, CardType cardType)
         {
-            var Updated = _cardTypeRepo.UpdateCardTypeAsync(id, cardType);
+            var Updated = await _cardTypeRepo.UpdateCardTypeAsync(id, cardType);
             return (Updated);
         }
     }

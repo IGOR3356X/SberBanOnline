@@ -22,10 +22,21 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICardRepository,CardRepository>();
 builder.Services.AddScoped<ICardTypeRepository, CardTypeRepository>();
 builder.Services.AddScoped<IExchangeRateRepositroy, ExchangeRateRepository>();
+builder.Services.AddScoped<IHomeAdressRepository, HomeAdressRepository>();
+builder.Services.AddScoped<ITransactionHistoryRepository, TransactionHistoryRepository>();
+builder.Services.AddScoped<ITransactionTypeRepository, TransactionTypeRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+
 
 builder.Services.AddScoped<ICardServices, CardServices>();
 builder.Services.AddScoped<ICardTypeServices, CardTypeServices>();
 builder.Services.AddScoped<IExchangeRateServices, ExchangeRateServices>();
+builder.Services.AddScoped<IHomeAdressServices, HomeAdressServices>();
+builder.Services.AddScoped<ITransactionHistoryServices, TransactionHistoryServices>();
+builder.Services.AddScoped<ITransactionTypeServices, TransactionTypeServices>();
+builder.Services.AddScoped<IUserRoleServices, UserRoleServices>();
+builder.Services.AddScoped<IUserServices, UserServices>();
 
 var app = builder.Build();
 
