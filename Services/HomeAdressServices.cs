@@ -1,5 +1,7 @@
-﻿using SberBanOnline.Interfaces.IRepository;
+﻿using SberBanOnline.Dtos.HomeAdress;
+using SberBanOnline.Interfaces.IRepository;
 using SberBanOnline.Interfaces.IServices;
+using SberBanOnline.Mappers;
 using SberBanOnline.Models;
 
 namespace SberBanOnline.Services
@@ -11,10 +13,11 @@ namespace SberBanOnline.Services
         {
             _repository = repository;
         }
-        public async Task<HomeAdress> CreateAdressAsync(HomeAdress homeAdress)
+        public async Task<HomeAdressDto> CreateAdressAsync(CreateHomeAdressRequestDto adressDto)
         {
-            var createResult = await _repository.CreateAdressAsync(homeAdress);
-            return (homeAdress);
+            var toModel = adressDto.ToHomeAdressFromDto();
+            var createResult = await _repository.CreateAdressAsync(toModel);
+            return (createResult.ToHomeAdressDto());
         }
 
         public async Task<bool> DeleteAdressAsync(int id)
@@ -23,22 +26,32 @@ namespace SberBanOnline.Services
             return (Answer);
         }
 
-        public async Task<List<HomeAdress>> GetAllAsync()
+        public async Task<List<HomeAdressDto>> GetAllAsync()
         {
-            var listExchangeRate = await _repository.GetAllAsync();
-            return (listExchangeRate);
+            var listHomeAdress = await _repository.GetAllAsync();
+            return listHomeAdress.Select(p => p.ToHomeAdressDto()).ToList();
         }
 
-        public async Task<HomeAdress?> GetByIdAsync(int id)
+        public async Task<HomeAdressDto?> GetByIdAsync(int id)
         {
-            var selectedCardType = await _repository.GetByIdAsync(id);
-            return (selectedCardType);
+            var addresRow = await _repository.GetByIdAsync(id);
+
+            if (addresRow == null)
+            {
+                return null;
+            }
+            return addresRow.ToHomeAdressDto();
         }
 
-        public async Task<HomeAdress?> UpdateAdressAsync(int id, HomeAdress homeAdress)
+        public async Task<HomeAdressDto?> UpdateAdressAsync(int id, UpdateHomeAdressRequestDto updateAdress)
         {
-            var Updated = await _repository.UpdateAdressAsync(id, homeAdress);
-            return Updated;
+            var updated = await _repository.UpdateAdressAsync(id, updateAdress);
+
+            if (updated != null)
+            {
+                return updated.ToHomeAdressDto();
+            }
+            return null;
         }
     }
 }

@@ -1,13 +1,14 @@
-﻿using SberBanOnline.Models;
+﻿using SberBanOnline.Dtos.HomeAdress;
+using SberBanOnline.Models;
 
 namespace SberBanOnline.Interfaces.IServices
 {
     public interface IHomeAdressServices
     {
-        Task<List<HomeAdress>> GetAllAsync();
-        Task<HomeAdress?> GetByIdAsync(int id);
-        Task<HomeAdress> CreateAdressAsync(HomeAdress homeAdress);
+        Task<List<HomeAdressDto>> GetAllAsync();
+        Task<HomeAdressDto?> GetByIdAsync(int id);
+        Task<HomeAdressDto> CreateAdressAsync(CreateHomeAdressRequestDto adressDto);
         Task<bool> DeleteAdressAsync(int id);
-        Task<HomeAdress?> UpdateAdressAsync(int id, HomeAdress homeAdress);
+        Task<HomeAdressDto?> UpdateAdressAsync(int id, UpdateHomeAdressRequestDto adressDto);
     }
 }

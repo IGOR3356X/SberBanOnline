@@ -1,5 +1,8 @@
-﻿using SberBanOnline.Interfaces.IRepository;
+﻿using SberBanOnline.Dtos.Card;
+using SberBanOnline.Dtos.GG;
+using SberBanOnline.Interfaces.IRepository;
 using SberBanOnline.Interfaces.IServices;
+using SberBanOnline.Mappers;
 using SberBanOnline.Models;
 
 namespace SberBanOnline.Services
@@ -12,11 +15,13 @@ namespace SberBanOnline.Services
         {
             _cardRepo = cardRepository;
         }
-        public async Task<Card> CreateCard(Card card)
+        public async Task<CardDto> CreateCard(CreateCardRequestDto cardModel)
         {
-            var createdCard = await _cardRepo.CreateCard(card);
+            var createdCard = cardModel.ToCardFromCreateCardDto();
 
-            return createdCard;
+            var answer = await _cardRepo.CreateCard(createdCard);
+
+            return answer.ToCardDto();
         }
 
         public async Task<bool> DeleteCard(int id)
@@ -31,21 +36,32 @@ namespace SberBanOnline.Services
             return true;
         }
 
-        public async Task<List<Card>> GetAllAsync()
+        public async Task<List<CardDto>> GetAllAsync()
         {
-            return await _cardRepo.GetAllAsync();
+            var cardList = await _cardRepo.GetAllAsync();
+            return cardList.Select(p => p.ToCardDto()).ToList();
         }
 
-        public async Task<Card?> GetCardByIdAsync(int id)
+        public async Task<CardDto?> GetCardByIdAsync(int id)
         {
-            return await _cardRepo.GetCardByIdAsync(id);
+            var promoRow = await _cardRepo.GetCardByIdAsync(id);
+            
+            if (promoRow != null)
+            {
+                return promoRow.ToCardDto();
+            }
+            return null;
         }
 
-        public Task<Card?> UpdateCard(Card card, int id)
+        public async Task<CardDto?> UpdateCard(UpdateCardRequestDto updateCard, int id)
         {
-            var updatedCard = _cardRepo.UpdateCard(card, id);
+            var updatedCard = await _cardRepo.UpdateCard(updateCard.ToCardFromUpdateCardDto(), id);
 
-            return updatedCard;
+            if (updatedCard != null)
+            {
+                return updatedCard.ToCardDto();
+            }
+            return null;
         }
     }
 }

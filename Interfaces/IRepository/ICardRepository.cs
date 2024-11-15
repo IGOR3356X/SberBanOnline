@@ -1,4 +1,5 @@
-﻿using SberBanOnline.Models;
+﻿using SberBanOnline.Dtos.Card;
+using SberBanOnline.Models;
 
 namespace SberBanOnline.Interfaces.IRepository
 {
@@ -7,7 +8,7 @@ namespace SberBanOnline.Interfaces.IRepository
         Task<List<Card>> GetAllAsync();
         Task<Card?> GetCardByIdAsync(int id);
         Task<Card> CreateCard(Card card);
-        Task<Card?> UpdateCard(Card card,int id);
+        Task<Card?> UpdateCard(Card updateCard,int id);
         Task<bool> DeleteCard(int id);
     }
 }

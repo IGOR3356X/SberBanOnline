@@ -1,4 +1,5 @@
-﻿using SberBanOnline.Models;
+﻿using SberBanOnline.Dtos.HomeAdress;
+using SberBanOnline.Models;
 
 namespace SberBanOnline.Interfaces.IRepository
 {
@@ -8,6 +9,6 @@ namespace SberBanOnline.Interfaces.IRepository
         Task<HomeAdress?> GetByIdAsync(int id);
         Task<HomeAdress> CreateAdressAsync(HomeAdress homeAdress);
         Task<bool> DeleteAdressAsync(int id);
-        Task<HomeAdress?> UpdateAdressAsync(int id, HomeAdress homeAdress);
+        Task<HomeAdress?> UpdateAdressAsync(int id, UpdateHomeAdressRequestDto homeAdress);
     }
 }

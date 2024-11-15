@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SberBanOnline.Dtos.HomeAdress;
 using SberBanOnline.Interfaces.IServices;
 using SberBanOnline.Models;
 
@@ -34,18 +35,18 @@ namespace SberBanOnline.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAdressAsync([FromBody] HomeAdress adress)
+        public async Task<IActionResult> CreateAdressAsync([FromBody] CreateHomeAdressRequestDto createAdress)
         {
-            var createdAdress = await _services.CreateAdressAsync(adress);
+            var createdAdress = await _services.CreateAdressAsync(createAdress);
 
             return Ok(createdAdress);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateAdressAsync([FromBody] HomeAdress adress,int id)
+        public async Task<IActionResult> UpdateAdressAsync([FromBody] UpdateHomeAdressRequestDto updateDto,[FromRoute]int id)
         {
-            var selectedAdress =  await _services.GetByIdAsync(id);
+            var selectedAdress =  await _services.UpdateAdressAsync(id,updateDto);
 
             if (selectedAdress == null)
             {

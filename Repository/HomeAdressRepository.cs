@@ -2,6 +2,7 @@
 using SberBanOnline.Interfaces.IRepository;
 using SberBanOnline.Models;
 using Microsoft.EntityFrameworkCore;
+using SberBanOnline.Dtos.HomeAdress;
 
 namespace SberBanOnline.Repository
 {
@@ -38,23 +39,24 @@ namespace SberBanOnline.Repository
         {
             return await _context.HomeAdresses.FirstOrDefaultAsync(t => t.Id == id);
         }
-        public async Task<HomeAdress?> UpdateAdressAsync(int id, HomeAdress homeAdress)
+        public async Task<HomeAdress?> UpdateAdressAsync(int id, UpdateHomeAdressRequestDto updateAdress)
         {
-            var ExitingHomeAdre = await _context.HomeAdresses.FirstOrDefaultAsync(c =>
+            var ExitingHomeAdress = await _context.HomeAdresses.FirstOrDefaultAsync(c =>
            c.Id == id);
-            if (ExitingHomeAdre == null)
+            if (ExitingHomeAdress == null)
             {
                 return null;
             }
-            ExitingHomeAdre.Id = id;
-            ExitingHomeAdre.Users = homeAdress.Users;
-            ExitingHomeAdre.Country = homeAdress.Country;
-            ExitingHomeAdre.City = homeAdress.City;
-            ExitingHomeAdre.Adress = homeAdress.Adress;
-            ExitingHomeAdre.Home = homeAdress.Home;
-            ExitingHomeAdre.Apartment = homeAdress.Apartment;
+            ExitingHomeAdress.Id = id;
+            ExitingHomeAdress.Country = updateAdress.Country;
+            ExitingHomeAdress.City = updateAdress.City;
+            ExitingHomeAdress.Adress = updateAdress.Adress;
+            ExitingHomeAdress.Home = updateAdress.Home;
+            ExitingHomeAdress.Apartment = updateAdress.Apartment;
+            
             await _context.SaveChangesAsync();
-            return ExitingHomeAdre;
+
+            return ExitingHomeAdress;
         }
     }
 }

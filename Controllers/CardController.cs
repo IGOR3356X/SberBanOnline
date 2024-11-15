@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SberBanOnline.Dtos.Card;
+using SberBanOnline.Dtos.GG;
 using SberBanOnline.Interfaces.IServices;
 using SberBanOnline.Models;
 
@@ -28,22 +30,30 @@ namespace SberBanOnline.Controllers
         {
             var selectedCard = await _cardServices.GetCardByIdAsync(id);
 
-            return Ok(selectedCard);
+            if (selectedCard != null)
+            {
+                return Ok(selectedCard);
+            }
+            else
+            {
+                return NotFound();
+            }
+
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCard(Card card)
+        public async Task<IActionResult> CreateCard(CreateCardRequestDto cardModel)
         {
-            var createdCard = await _cardServices.CreateCard(card);
+            var createdCard = await _cardServices.CreateCard(cardModel);
 
             return Ok(createdCard);
         }
 
         [HttpPut]
         [Route ("{id}")]
-        public async Task<IActionResult> UpdateCard([FromRoute]int id,Card card)
+        public async Task<IActionResult> UpdateCard([FromRoute]int id, [FromBody] UpdateCardRequestDto updateDto)
         {
-            var updatedCard  = await _cardServices.UpdateCard(card,id);
+            var updatedCard  = await _cardServices.UpdateCard(updateDto,id);
 
             if (updatedCard == null)
             {
